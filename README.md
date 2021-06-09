@@ -12,7 +12,7 @@ yarn run build
 ```
 yarn start
 ```
-For development purposes uncomment below in server/express.js file:
+For development purposes open server/express.js file and uncomment :
 ```
 import devBundle from './devBundle';
 devBundle.compile(app);

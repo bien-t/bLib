@@ -37,7 +37,7 @@ export default {
     },
     title: {
         position: 'absolute',
-        top: 40,
+        top: 10,
         fontWeight: 'bold',
         textTransform: 'uppercase',
         color: colors.mainColor

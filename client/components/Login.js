@@ -39,7 +39,7 @@ function Login() {
     return (
         <>
             <form className={classes.form} onSubmit={handleSubmit}>
-                <span className={classes.title}>Login</span>
+                <h3 className={classes.title}>Login</h3>
                 <label className={classes.inputContainer}>
                     Email: <input type="email" placeholder="Email" onChange={handleValueChange('email')} />
                 </label>

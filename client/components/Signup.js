@@ -39,7 +39,7 @@ function Signup() {
     }
     return (
         <form className={classes.form} onSubmit={handleSubmit}>
-            <span className={classes.title}>Create a new account</span>
+            <h3 className={classes.title}>Create a new account</h3>
             <label className={classes.inputContainer}>
                 Email:<input type="email" placeholder="Email" onChange={handleValueChange('email')} />
             </label>

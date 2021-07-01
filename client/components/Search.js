@@ -4,8 +4,8 @@ import { Link } from 'react-router-dom';
 import { useAuth } from './api/api-auth'
 import apiLibrary from './api/api-library'
 import LibraryMiniature from './LibraryMiniature';
-import { header, button} from '../styles/mixins'
-import {colors} from '../styles/variables'
+import { header, button } from '../styles/mixins'
+import { colors } from '../styles/variables'
 
 const useStyles = createUseStyles({
     header: header(),
@@ -130,8 +130,8 @@ function Search() {
                     if (data.authors) {
                         return <LibraryMiniature book={data} key={`book-${index}`} />
                     } else {
-                        return <span>
-                            <Link to={`/author/${data._id}`} key={`authorLink-${index}`}>{`${data.name}`}</Link>
+                        return <span key={`authorLink-${index}`}>
+                            <Link to={`/author/${data._id}`} >{`${data.name}`}</Link>
                         </span>
                     }
                 })}

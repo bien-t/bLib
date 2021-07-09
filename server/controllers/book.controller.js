@@ -111,6 +111,9 @@ const search = async (req, res) => {
     try {
         const searchValue = req.body.searchValue
         const searchCategory = req.body.searchCategory
+        if (searchValue.length === 0 || searchCategory === '') {
+            return res.json({ error: 'Error: check the search value or category selection' })
+        }
         let title;
         let book;
         let author;

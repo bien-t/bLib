@@ -18,7 +18,7 @@ const useStyles = createUseStyles({
         flexWrap: 'wrap',
         margin: '0 auto',
 
-        '& span a': {
+        '& a': {
             textDecoration: 'none',
             color: colors.mainColor,
             fontSize: '2rem',
@@ -66,6 +66,13 @@ const useStyles = createUseStyles({
         }
     },
     button: button(5),
+    error: {
+        color: 'red',
+        position: 'relative',
+        marginBottom: 10,
+        width:'100%',
+        textAlign:'center'
+    }
 })
 
 
@@ -98,13 +105,18 @@ function Search() {
             searchValue: searchValues.searchValue,
             searchCategory: searchValues.searchCategory
         }
-        apiLibrary.searchBook(search).then(data => {
-            if (data.error) {
-                setError({ error: data.error })
-            } else {
-                setReturnedData(data)
-            }
-        })
+        if (search.searchValue.length === 0 || search.searchCategory === '') {
+            setError({ error: 'Error: check the search value or category selection' })
+        } else {
+            apiLibrary.searchBook(search).then(data => {
+                if (data.error) {
+                    setError({ error: data.error })
+                } else {
+                    setError({ error: '' })
+                    setReturnedData(data)
+                }
+            })
+        }
     }
 
     React.useEffect(() => {
@@ -122,6 +134,9 @@ function Search() {
                     <label><input type="radio" name="searchOption" id="" onChange={handleSearchChange('isbn')} />Book by ISBN</label>
                     <label><input type="radio" name="searchOption" id="" onChange={handleSearchChange('author')} />Author</label>
                 </div>
+                {error.error &&
+                    <span className={classes.error}>{error.error}</span>
+                }
                 <button className={`${classes.button}`} type="submit">Submit</button>
             </form>
             <div className={classes.library}>
@@ -130,9 +145,7 @@ function Search() {
                     if (data.authors) {
                         return <LibraryMiniature book={data} key={`book-${index}`} />
                     } else {
-                        return <span key={`authorLink-${index}`}>
-                            <Link to={`/author/${data._id}`} >{`${data.name}`}</Link>
-                        </span>
+                        return <Link to={`/author/${data._id}`} key={`authorLink-${index}`}>{`${data.name}`}</Link>
                     }
                 })}
             </div>

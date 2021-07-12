@@ -30,7 +30,7 @@ afterEach(() => server.resetHandlers())
 afterAll(() => server.close())
 
 describe('Search component test', () => {
-    test('renders MainPage component', () => {
+    test('renders Search component', () => {
         render(<Search />)
     })
 

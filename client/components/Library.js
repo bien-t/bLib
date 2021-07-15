@@ -190,15 +190,13 @@ function Library() {
     }, [location.search])
 
     React.useEffect(() => {
-        const abort = new AbortController()
-        const signal = abort.signal;
         const pages = {
             limit: pagination.limit,
             currentPage: pagination.currentPage < 0 ? pagination.currentPage = 0 : pagination.currentPage,
             skip: pagination.limit * pagination.currentPage
         }
 
-        apiLibrary.getBooks(pages, signal).then((data => {
+        apiLibrary.getBooks(pages).then((data => {
             if (data.error) {
                 setError({ error: data.error })
             } else {
@@ -225,7 +223,7 @@ function Library() {
 
 
         return function cleanup() {
-            abort.abort()
+            setError({})
         }
 
     }, [add.added, pagination.currentPage])
@@ -274,19 +272,19 @@ function Library() {
                             <span>Pages</span>
                             <input className={classes.formInput} type="text" placeholder="Pages" onChange={handleAddChange('pages')} name="pages" required />
                         </label>
-                        <label className={classes.formLabel} style={{ width: '100%' }}>
+                        <div className={classes.formLabel} style={{ width: '100%' }}>
                             <span>Book cover</span>
                             <span className={classes.radio}>
                                 <label><input type="radio" name="bookCover" onChange={handleCoverChange('upload')} checked={coverSelect.cover === "upload"} />Image upload</label>
                                 <label><input type="radio" name="bookCover" onChange={handleCoverChange('url')} checked={coverSelect.cover === "url"} />Image url</label>
                             </span>
                             {coverSelect.cover === 'upload' &&
-                                <input type="file" accept="image/*" onChange={handleAddChange('image')} required />
+                                <input type="file" accept="image/*" onChange={handleAddChange('image')} data-testid="coverUpload" name="coverUpload" required />
                             }
                             {coverSelect.cover === 'url' &&
-                                <input type="text" onChange={handleAddChange('url')} placeholder="Paste a book cover link" required />
+                                <input type="text" onChange={handleAddChange('url')} placeholder="Paste a book cover link" data-testid="coverUrl" name="coverUrl" required />
                             }
-                        </label>
+                        </div>
                         <label className={classes.formLabel} style={{ width: '100%' }}>
                             <span>Book description</span>
                             <textarea rows="10" placeholder="Book description" onChange={handleAddChange('description')} name="book_description"></textarea>

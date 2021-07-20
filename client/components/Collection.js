@@ -147,6 +147,9 @@ function Collection() {
                 }
             }
         }))
+        return function cleanup() {
+            setError({})
+        }
     }, [pagination.currentPage, reload.reload])
 
     React.useEffect(() => {

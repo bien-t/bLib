@@ -14,7 +14,7 @@ const addBook = async (book) => {
     }
 }
 
-const getBooks = async (pages) => {
+const getBooks = async (pages,signal) => {
     try {
         let response = await fetch('/api/books', {
             method: 'POST',
@@ -23,6 +23,7 @@ const getBooks = async (pages) => {
                 'Content-Type': 'application/json'
             },
             body: JSON.stringify(pages),
+            signal:signal
         })
 
         return await response.json()

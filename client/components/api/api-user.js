@@ -32,7 +32,7 @@ const addToCollection = async (bookStatus, params) => {
     }
 }
 
-const getUserCollection = async (params, pages, status) => {
+const getUserCollection = async (params, pages,signal, status) => {
     try {
         let obj = {};
         obj.pages = pages;
@@ -43,7 +43,8 @@ const getUserCollection = async (params, pages, status) => {
                 'Accept': 'application/json',
                 'Content-Type': 'application/json',
             },
-            body: JSON.stringify(obj)
+            body: JSON.stringify(obj),
+            signal:signal
         })
 
         return await response.json()

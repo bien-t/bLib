@@ -172,7 +172,7 @@ function CollectionMiniature({ book, status, reload }) {
                     {form.show &&
                         <form className={classes.form} onSubmit={handleSubmit}>
 
-                            <select onChange={handleChange} defaultValue={status}>
+                            <select name="status" onChange={handleChange} defaultValue={status}>
                                 <option value="Completed">Completed</option>
                                 <option value="Plan to read">Plan to read</option>
                                 <option value="Reading">Reading</option>

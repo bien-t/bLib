@@ -113,13 +113,20 @@ function Collection() {
     }, [location.search])
 
     React.useEffect(() => {
+        const abort = new AbortController()
+        const signal = abort.signal;
+
         const pages = {
             limit: pagination.limit,
             currentPage: pagination.currentPage < 0 ? pagination.currentPage = 0 : pagination.currentPage,
             skip: pagination.limit * pagination.currentPage
         }
 
-        apiUser.getUserCollection(userId, pages, { status: filter.status }).then((data => {
+        apiUser.getUserCollection(userId, pages,signal, { status: filter.status }).then((data => {
+            if (data === undefined) {
+                return null
+            }
+            
             if (data.error) {
                 setError({ error: data.error })
                 if (data.error === 'No books') {
@@ -147,6 +154,10 @@ function Collection() {
                 }
             }
         }))
+        return function cleanup() {
+            abort.abort()
+            setError({})
+        }
     }, [pagination.currentPage, reload.reload])
 
     React.useEffect(() => {

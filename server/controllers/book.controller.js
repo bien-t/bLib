@@ -111,22 +111,27 @@ const search = async (req, res) => {
     try {
         const searchValue = req.body.searchValue
         const searchCategory = req.body.searchCategory
-
+        if (searchValue.length === 0 || searchCategory === '') {
+            return res.json({ error: 'Error: check the search value or category selection' })
+        }
+        let title;
+        let book;
+        let author;
         switch (searchCategory) {
             case 'title':
-                let title = await Book.find({
+                title = await Book.find({
                     title: new RegExp(`${searchValue}`, 'i')
                 }).populate('authors', 'name');
                 return res.json(title)
 
             case 'isbn':
-                let book = await Book.find({
+                book = await Book.find({
                     isbn: searchValue
                 }).populate('authors', 'name');
                 return res.json(book)
 
             case 'author':
-                let author = await Author.find({ name: new RegExp(`${searchValue}`, 'i') }).populate('books', 'title isbn imgPath')
+                author = await Author.find({ name: new RegExp(`${searchValue}`, 'i') }).populate('books', 'title isbn imgPath')
                 return res.json(author)
 
             default:

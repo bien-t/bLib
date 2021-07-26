@@ -1,19 +1,17 @@
 import React from 'react';
-import { createUseStyles } from 'react-jss'
 import { useAuth } from './api/api-auth'
 import { Redirect } from 'react-router-dom'
-import styles from '../styles/login_signUp_form'
-
-const useStyles = createUseStyles(styles)
+import SignupForm from './SignupForm';
 
 function Signup() {
-    const classes = useStyles();
     const auth = useAuth()
-
 
     const [formValues, setFormValues] = React.useState({
         email: '',
         password: '',
+    })
+    
+    const [error, setError] = React.useState({
         error: ''
     })
 
@@ -29,7 +27,7 @@ function Signup() {
         }
         auth.signup(user).then((data => {
             if (data.error) {
-                setFormValues({ ...formValues, error: data.error })
+                setError({error: data.error })
             }
         }))
     }
@@ -38,19 +36,7 @@ function Signup() {
         return <Redirect to="/" />;
     }
     return (
-        <form className={classes.form} onSubmit={handleSubmit}>
-            <h3 className={classes.title}>Create a new account</h3>
-            <label className={classes.inputContainer}>
-                Email:<input type="email" placeholder="Email" onChange={handleValueChange('email')} />
-            </label>
-            <label className={classes.inputContainer}>
-                Password:<input type="password" placeholder="Password - between 6 and 20 characters" onChange={handleValueChange('password')} />
-            </label>
-            {formValues.error &&
-                <span className={classes.error}>{formValues.error}</span>
-            }
-            <button type="submit">Register</button>
-        </form>
+        <SignupForm handleValueChange={handleValueChange} handleSubmit={handleSubmit} data={error} />
     )
 }
 

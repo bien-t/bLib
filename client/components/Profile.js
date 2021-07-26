@@ -144,7 +144,6 @@ function Profile() {
                 if (data.message === "Password has been updated") {
                     setPasswordFields({ password: '', passwordConfirmation: '', show: false })
                     setReload({ reload: !reload.reload })
-                    console.log(data.message)
                 }
             })
             setMessage({ message: '' })
@@ -164,6 +163,9 @@ function Profile() {
         apiUser.getUserInfo({
             userId: auth.user._id
         }, signal).then((data => {
+            if (data === undefined) {
+                return null
+            }
             if (data.error) {
                 setError({ error: data.error })
             } else {
@@ -172,6 +174,8 @@ function Profile() {
         }))
         return function cleanup() {
             abort.abort()
+            setEmailFields({})
+
         }
     }, [reload.reload])
 
@@ -201,7 +205,7 @@ function Profile() {
                                     <label>Email: <br />
                                         <input type="email" onChange={emailChange('email')} />
                                     </label>
-                                    <label>Confirm your email <br />
+                                    <label>Confirm your email: <br />
                                         <input type="email" onChange={emailChange('emailConfirmation')} />
                                     </label>
                                     <span style={{ color: "red" }}>
@@ -222,7 +226,7 @@ function Profile() {
                                     <label>Password: <br />
                                         <input type="password" onChange={passwordChange('password')} />
                                     </label>
-                                    <label>Confirm your password <br />
+                                    <label>Confirm your password: <br />
                                         <input type="password" onChange={passwordChange('passwordConfirmation')} />
                                     </label>
                                     <span style={{ color: "red" }}>

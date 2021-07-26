@@ -11,7 +11,7 @@ mongoose.connect(config.mongoUrl,{
 })
 
 mongoose.connection.on('error',()=>{
-    throw new Error(`unable to connect to database${mongoUrl}`)
+    throw new Error(`unable to connect to database${config.mongoUrl}`)
 })
 
 app.listen(config.port, (err)=> {

@@ -12,6 +12,9 @@ yarn run build
 ```
 yarn start
 ```
+```
+yarn test
+```
 For development purposes open server/express.js file and uncomment :
 ```
 import devBundle from './devBundle';

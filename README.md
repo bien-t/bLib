@@ -26,7 +26,7 @@ yarn run development
 
 # Demo
 
-[Demo](https://b-lib.herokuapp.com)
+[Demo](https://blib.onrender.com)
 >login: test@test.pl
 
 >password: 123456
